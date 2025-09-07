@@ -1,7 +1,7 @@
 import axios from "axios"
 
 function SendData(params) {
-    axios.post(`https://ferrariback.onrender.com/create/user`, params)
+    axios.post(`http://localhost:5000/create/user`, params)
 
 }
 

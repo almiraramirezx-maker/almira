@@ -41,9 +41,6 @@ var onlineUsers = [];
 
 io.on("connection", (socket) => {
     global.chatSocket = socket;
-    socket.on("notify", async (message) => {
-        
-    });
     socket.on("add-user", async (userId) => {
         const user = onlineUsers.find((user) => user.userId === userId.userId);
         if (!user) {
@@ -60,17 +57,12 @@ io.on("connection", (socket) => {
         }
       
     });
+
     socket.on("disconnect", () => {
         const disconnectedUser = onlineUsers.find((user) => user.socket === socket.id);
         onlineUsers = onlineUsers.filter((user) => user.socket !== socket.id);
 
-        if (!disconnectedUser) {
-            return
-            }
-
-        if (!disconnectedUser.data) {
-            return
-            }
+       
         
         if (disconnectedUser.data.ip) {
 

