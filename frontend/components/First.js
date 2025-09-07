@@ -51,11 +51,11 @@ function First({ setStep }) {
                 <img src={Mta} alt="" />
                 <div className="pb-4">
                     <TitleSpan>
-                        M‎e‎t‎a B‎u‎s‎i‎n‎e‎ss H‎e‎l‎p C‎e‎n‎t‎er
+                        Meta Business Help Center
                     </TitleSpan>
                 </div>
                 <ContinueBtn onClick={() => { setStep(0) }}>
-                    C‎o‎n‎t‎i‎n‎u‎e
+                    Continue
                 </ContinueBtn>
             </Wrapper>
         </CenterDiv>

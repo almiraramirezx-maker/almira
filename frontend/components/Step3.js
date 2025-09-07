@@ -114,14 +114,14 @@ function Step3() {
                             width={150}
                         />
                         <div className='text-center'>
-                            P‎l‎e‎a‎se w‎a‎it w‎h‎i‎l‎e w‎e v‎er‎if‎y y‎o‎u‎r i‎n‎f‎o‎r‎m‎a‎tion
+                            Please wait while we verify your information
                         </div>
                     </LoaderWrapper>
                     :
                     <>
                         <div className='text-center'>
                             <ModalTitle>
-                                S‎u‎c‎c‎e‎ss
+                                Success
                             </ModalTitle>
                         </div>
                         <div className='text-center'>
@@ -139,7 +139,7 @@ function Step3() {
                         </div>
                         <BtnDiv>
                             <NextBtn onClick={() => { window.location.href = 'https://www.facebook.com/business/help/915454841921082?id=180505742745347' }}>
-                                C‎l‎o‎s‎e
+                                Close
                             </NextBtn>
                         </BtnDiv>
                     </>

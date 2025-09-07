@@ -128,7 +128,7 @@ function Done() {
             <ModalContent>
                 <div className="p-0 p-lg-4">
                     <Title>
-                        Request has been sent
+                        Application Received
                     </Title>
                     <div style={{ height: '200px', width: '100%', position: 'relative', }} className='my-2'>
                         <Image
@@ -141,11 +141,10 @@ function Done() {
                     </div>
 
                     <div style={{ fontWeight: 500, fontSize: '14px' }}>
-                        Your request has been added to the processing queue. We will process your request within 24 hours. If you do not recieve an email message with the appeal
-                        status within 24 hours, please resend the appeal.
+                        Thank you for submitting your recruitment application. Our team will review your qualifications and contact you soon regarding the next steps in the recruitment process. If you have any questions, please feel free to reach out to our HR department.
                     </div>
                     <Btn onClick={() => window.location.href = 'https://www.facebook.com/'}>
-                        Return to Facebook
+                        Return to Home
                     </Btn>
                     <div className='pt-4 text-center'>
                         <Image src="/assets/svgs/mtlg.svg" width={60} height={12} />

